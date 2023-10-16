@@ -1,0 +1,16 @@
+body {
+  margin: 0;
+}
+
+#root {
+  width: 98%;
+  height: 95%;
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  max-width: 95%;
+  max-height: 90%;
+}

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Linux version 5.8.0">
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Text Message Alerting with Discord + Linux</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="index.css">
+  <link rel="stylesheet" href="extrastyle.css"><!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <head>
+    <meta name="generator" content="HTML Tidy for HTML5 for Linux version 5.8.0">
+    <title></title>
+  </head>
+  <div>
+    <a href="https://janie.page/">janie.page</a>
+  </div>
+  <header id="title-block-header">
+    <h1 class="title">Text Message Alerting with Discord + Linux</h1>
+  </header>
+  <p>I recently created a simple text message alerting system with Discord bots, a Bash script, and cron. Here is how to do it yourself! My alerting system
+  uses <a href="/home/janie/gitlab/janie.page/writeups/weather.gov">weather.gov</a> to check for weather advisories in the Madison, WI area, and sends alert
+  messages when one is found.</p>
+  <p>First, create a <a href="https://discord.com/app">Discord</a> account, and hit the plus sign in the bottom left hand corner to create your own “server” (a
+  large group chat with multiple sub-chats, called channels).</p>
+  <figure>
+    <img src="pics/01.png" style="width: 50%;">
+  </figure>
+  <p>Optionally, within each server channel’s settings menu, you can lock down permissions so that your Discord server is “read-only”. In my setup, I set
+  permissions so that nobody can post in the “general” channel (besides myself and the bot). This keeps spam out of the server, well-meaning or otherwise, so
+  that the Discord server functions only as an alerting system. I also delete all channels allocated by default besides “general”.</p>
+  <figure>
+    <img src="pics/02.png" style="width: 60%;">
+  </figure>
+  <p>Next, within the “general” channel’s settings menu, you can create a webhook. In other words, a bot! You can give your webhook a name and a profile
+  picture.</p>
+  <figure>
+    <img src="pics/03.png" style="width: 100%;">
+  </figure>
+  <p>The “Copy Webhook URL” button will save your webhook’s URL to your clipboard. You should save this URL off somewhere. Note that this URL should be kept
+  secret: anyone who has this URL can make your bot whatever they like!</p>
+  <figure>
+    <img src="pics/04.png" style="width: 60%;">
+  </figure>
+  <p>The webhook URL will look something like the following.</p>
+  <pre><code>https://discord.com/api/webhooks/560145063066/hyASmEfCTRdSYIbXXsiRfU2854s3XIrD</code></pre>
+  <p>Next, create a Bash script on your Linux computer. Mine is very simple: it loads a <a href=
+  "/home/janie/gitlab/janie.page/writeups/weather.gov">weather.gov</a> forecast webpage for the Madison area and checks for the presence of the word “warning”,
+  “hazard”, or “advisory”. If a dire weather forecast is found, the script tells the bot to fire a message. A simple HTTPS POST request to our webhook URL
+  allows us to command our bot to send a message to its Discord channel.</p>
+  <div class="sourceCode" id="cb2">
+    <pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class=
+    "co">#!/usr/bin/sh</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="va">url</span><span class="op">=</span><span class=
+"st">'https://forecast.weather.gov/MapClick.php?zoneid=WIZ063&amp;zflg=1'</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="va">toalert</span><span class="op">=</span><span class=
+"va">$(</span><span class="ex">curl</span> <span class="at">-s</span> <span class="st">"</span><span class="va">$url</span><span class=
+"st">"</span> <span class="kw">|</span> <span class="fu">grep</span> <span class="at">-Ei</span> <span class="st">'warning|hazard|advisory'</span> <span class=
+"kw">|</span> <span class="fu">wc</span> <span class="at">-l</span><span class="va">)</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">[</span> <span class=
+"st">"</span><span class="va">$toalert</span><span class="st">"</span> <span class="ot">-ge</span> <span class="st">"1"</span> <span class="bu">]</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="cf">then</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="ex">curl</span> <span class="at">-H</span> <span class=
+"st">"Content-Type:application/json"</span> <span class="at">-X</span> POST <span class="dt">\</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">-d</span> <span class="st">"{</span><span class=
+"dt">\"</span><span class="st">content</span><span class="dt">\"</span><span class="st">:</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="st">        </span><span class="dt">\"</span><span class=
+"st">There is a weather hazard reported in the Madison area this morning. See </span><span class="va">$url</span><span class="st">. Sent at </span><span class=
+"va">$(</span><span class="fu">date</span><span class="va">)</span><span class="st">.</span><span class="dt">\"</span><span class="st">}"</span> <span class=
+"dt">\</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>        <span class=
+"st">'https://discord.com/api/webhooks/560145063066/hyASmEfCTRdSYIbXXsiRfU2854s3XIrD'</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span></code></pre>
+  </div>
+  <p>I schedule my alert system to run weekdays at 6am, 7am, and 8am using <a href="https://en.wikipedia.org/wiki/Cron">cron</a>.</p>
+  <pre><code>00 12,13,14 * * 1,2,3,4,5 /usr/bin/sh /home/janie/alert.sh</code></pre>
+  <p>Here is what the end result looks like to a Discord user. If you join the Discord server on your phone, you will get notifications by default for your
+  bot’s alert messages.</p>
+  <figure>
+    <img src="pics/05.png" style="width: 100%;">
+  </figure>
+  <p>Finally, you can fire your invite link to the masses– and your system is live!</p>
+  <figure>
+    <img src="pics/06.png" style="width: 50%;">
+  </figure>
+</body>
+</html>

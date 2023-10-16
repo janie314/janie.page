@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Useful Linux commands</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="index.css" />
+  <link rel="stylesheet" href="extrastyle.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Linux version 5.8.0">
+  <title></title>
+</head>
+<body>
+  <div>
+    <a href="https://janie.page/">janie.page</a>
+  </div>
+</body>
+</html>
+<header id="title-block-header">
+<h1 class="title">Useful Linux commands</h1>
+</header>
+<table>
+<colgroup>
+<col style="width: 51%" />
+<col style="width: 48%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Command</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>awk '/^END/ { x = 0; } x { print $0; } /^BEGIN/ { x = 1; } '</code></td>
+<td>Print text between <code>BEGIN</code> and <code>END</code> lines
+(exclusive).</td>
+</tr>
+<tr class="even">
+<td><code>create table t01_tmp as select distinct * from t01; drop table t01; alter table t01_tmp rename to t01;</code></td>
+<td>Filter duplicates from the SQLite table <code>t01</code>.</td>
+</tr>
+<tr class="odd">
+<td><code>cut -d ',' -f 3,4</code></td>
+<td>Grab columns 3 and 4 of a CSV input from stdin.</td>
+</tr>
+<tr class="even">
+<td><code>date -d@$((0x$((perl -e'print"1B","0"x95' \| xxd -r -p; sleep 1) \| nc -u time.facebook.com 123 \| tail -c+41 \| head -c4 \| xxd -p)-64#23GDW0))</code></td>
+<td>Query the NTP server <code>time.facebook.com</code> (works on Rocky
+Linux’s versions of <code>netcat</code> / <code>xxd</code>).</td>
+</tr>
+<tr class="odd">
+<td><code>find ~/mydir -name '*go' -exec go fmt {} \;</code></td>
+<td>Execute a command recursively in <code>~/mydir</code> only against
+files with a certain file extension.</td>
+</tr>
+<tr class="even">
+<td><code>fuser -mv /mnt/disk</code></td>
+<td>Find all processes using the mount point
+<code>/mnt/disk</code>.</td>
+</tr>
+<tr class="odd">
+<td><code># Get most recent commit ID of Branch 2, say it's 49a8338</code><br/>
+<code>git fetch; git branch -v</code><br/><br/>
+<code># Switch to Branch 1</code><br/>
+<code>git checkout branch1</code><br/><br/>
+<code>git reset --hard 49a8338</code><br/></td>
+<td>Reset Branch 1 to be identical to Branch 2 in Git.</td>
+</tr>
+<tr class="even">
+<td><code>grep -rniI ~/mydir -e 'mysearch'</code></td>
+<td>Search recursively in <code>~/mydir</code> for the text
+<code>mysearch</code>. The <code>-I</code> option excludes binary
+files.</td>
+</tr>
+<tr class="odd">
+<td><code>ls -lart</code></td>
+<td>Easy to remember, puts most recently changed files at the bottom of
+the screen.</td>
+</tr>
+<tr class="even">
+<td><code># Run on Host 1</code><br/>
+<code>nc -lv 50000</code><br/><br/> <code># Run on Host 2</code><br/>
+<code>nc -v host1_hostname 50000</code></td>
+<td>Checks if communication is open on port 50000 between two Linux
+hosts with Netcat installed.<br/><br/>Another option:
+<code>python3 -m httpserver -p 50000</code> and
+<code>curl host1_hostname:50000</code>.</td>
+</tr>
+<tr class="odd">
+<td><code>nslookup time.gov 1.1.1.1</code></td>
+<td>Does a DNS lookup of the domain <code>time.gov</code> against the
+public DNS server at <code>1.1.1.1</code>. Useful for comparing to
+<code>nslookup time.gov</code>, which uses its environment’s DNS
+configuration.</td>
+</tr>
+<tr class="even">
+<td><code>openssl s_client -connect npr.org:443</code></td>
+<td>Establish a TLS connection to <code>npr.org:443</code>.</td>
+</tr>
+<tr class="odd">
+<td><code>openssl verify -verbose -CAfile ~/cacert.pem  ~/mycert.pem</code></td>
+<td>Determine if the CA certificate <code>~/cacert.pem</code> signed the
+certificate <code>~/mycert.pem</code>.</td>
+</tr>
+<tr class="even">
+<td><code>openssl x509 -in ~/mycert.pem -text</code></td>
+<td>Print the contents of the X.509 certificate
+<code>~/mycert.pem</code>.</td>
+</tr>
+<tr class="odd">
+<td><code>echo -e ".mode csv\n.import a.csv t01" \| sqlite data.sqlite3</code></td>
+<td>Import the CSV file <code>a.csv</code> into the table
+<code>t01</code> in the Sqlite database <code>data.sqlite3</code>.</td>
+</tr>
+<tr class="even">
+<td><code>ssh -N -L 50000:192.168.1.25:60000 pi</code></td>
+<td>Forward local port <code>50000</code> to remote port
+<code>60000</code> on SSH host <code>pi</code>.</td>
+</tr>
+<tr class="odd">
+<td><code>ssh -D 50000 -C -N pi</code></td>
+<td>Set up a local SOCKS listener which is tunneled to SSH host
+<code>pi</code>.</td>
+</tr>
+<tr class="even">
+<td><code>ssh-keygen -o -a 100 -t ed25519</code></td>
+<td>Generate an Ed25519 SSH key.</td>
+</tr>
+<tr class="odd">
+<td><code>tr -s ' '</code></td>
+<td>Squeeze successive spaces to a single space.</td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

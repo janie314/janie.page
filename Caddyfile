@@ -1,0 +1,19 @@
+{
+	admin off
+}
+
+janie.page {
+	file_server
+	root * /var/www/html
+	reverse_proxy /api/* localhost:50001
+	basicauth /api/* {
+		janie JDJhJDE0JEhDaXJwUkVWT1ZoOGpiVUEwZzBxLmVvVXpTZXkvTXVPZ0tYd1l3dk5Xb3RYRVJpR2JIYmJt
+	}
+}
+
+ip.janie.page {
+	templates
+	header Content-Type text/plain
+	respond "{{.RemoteIP}}"
+	encode zstd gzip
+}

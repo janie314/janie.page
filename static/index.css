@@ -1,0 +1,80 @@
+.colflex {
+  display: flex; 
+  flex-direction: column;
+}
+.colflex:nth-child(2) {
+  flex: 2;
+}
+.colflex:nth-child(2) {
+  flex: 3;
+}
+#picdiv > * {
+  margin-bottom: 4%;
+}
+.rowflex {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.rowflex > * {
+  flex: 1;
+}
+/* 
+ * layout adjustments
+ */ 
+#root {
+  margin: 3%;
+}
+#mainbody {
+  margin-top: 2%;
+}
+#picdiv {
+  max-width: 80%;
+  min-width: 400px;
+  margin-bottom: 5%;
+}
+#linkdiv {
+  min-width: 400px;
+  margin-bottom: 5%;
+}
+.projlink {
+  margin-top: 3%;
+}
+.projlink.first {
+  margin-top: 0;
+  margin-bottom: 1%;
+  font-weight: bold;
+}
+.projlink.second {
+  margin-top: 4%;
+  margin-bottom: 1%;
+  font-weight: bold;
+}
+#slogan {
+  margin-bottom: 3%;
+}
+/* 
+ * style
+ */
+ * { 
+  color: black; 
+  font: 1em sans-serif;
+}
+h1 {
+  font: 1.5em sans-serif;
+  font-weight: bold;
+  margin-bottom: 1%;
+}
+.title {
+  font: 2em sans-serif;
+  font-weight: bold;
+  margin-bottom: 1%;
+}
+#toc-title {
+  font: 1.5em sans-serif;
+  font-weight: bold;
+  margin-bottom: 1%;
+}
+code, .sourceCode, .sourceCode > *, .sourceCode > * > * {
+  font: 1em monospace;
+}
