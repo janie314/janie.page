@@ -2,8 +2,14 @@
   display: flex; 
   flex-direction: column;
 }
-.colflex > * {
-  flex: 1;
+.colflex:nth-child(2) {
+  flex: 2;
+}
+.colflex:nth-child(2) {
+  flex: 3;
+}
+#picdiv > * {
+  margin-bottom: 4%;
 }
 .rowflex {
   display: flex;
@@ -23,6 +29,11 @@
   margin-top: 2%;
 }
 #picdiv {
+  max-width: 80%;
+  min-width: 400px;
+  margin-bottom: 5%;
+}
+#linkdiv {
   min-width: 400px;
   margin-bottom: 5%;
 }
@@ -30,16 +41,13 @@
   margin-top: 3%;
 }
 .projlink.first {
-  margin-top: 5%;
-}
-.projlink.first {
   margin-top: 0;
-  margin-bottom: 3%;
+  margin-bottom: 1%;
   font-weight: bold;
 }
 .projlink.second {
-  margin-top: 8%;
-  margin-bottom: 3%;
+  margin-top: 4%;
+  margin-bottom: 1%;
   font-weight: bold;
 }
 #slogan {
