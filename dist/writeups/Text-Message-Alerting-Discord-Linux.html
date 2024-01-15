@@ -11,12 +11,17 @@
     div.columns{display: flex; gap: min(4vw, 1.5em);}
     div.column{flex: auto; overflow-x: auto;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-    ul.task-list{list-style: none;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
     ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
       width: 0.8em;
       margin: 0 0.8em 0.2em -1.6em;
       vertical-align: middle;
     }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    /* CSS for syntax highlighting */
     pre > code.sourceCode { white-space: pre; position: relative; }
     pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
     pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -80,7 +85,6 @@
     code span.va { color: #19177c; } /* Variable */
     code span.vs { color: #4070a0; } /* VerbatimString */
     code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
   <link rel="stylesheet" href="index.css" />
   <link rel="stylesheet" href="extrastyle.css" />
@@ -107,7 +111,7 @@
 <p>I recently created a simple text message alerting system with Discord
 bots, a Bash script, and cron. Here is how to do it yourself! My
 alerting system uses <a
-href="/home/janie/gitlab/janie.page/writeups/weather.gov">weather.gov</a>
+href="/home/janie/git/janie.page/writeups/weather.gov">weather.gov</a>
 to check for weather advisories in the Madison, WI area, and sends alert
 messages when one is found.</p>
 <p>First, create a <a href="https://discord.com/app">Discord</a>
@@ -143,7 +147,7 @@ URL can make your bot whatever they like!</p>
 <pre><code>https://discord.com/api/webhooks/560145063066/hyASmEfCTRdSYIbXXsiRfU2854s3XIrD</code></pre>
 <p>Next, create a Bash script on your Linux computer. Mine is very
 simple: it loads a <a
-href="/home/janie/gitlab/janie.page/writeups/weather.gov">weather.gov</a>
+href="/home/janie/git/janie.page/writeups/weather.gov">weather.gov</a>
 forecast webpage for the Madison area and checks for the presence of the
 word “warning”, “hazard”, or “advisory”. If a dire weather forecast is
 found, the script tells the bot to fire a message. A simple HTTPS POST

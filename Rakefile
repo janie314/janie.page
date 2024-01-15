@@ -13,7 +13,7 @@ desc "build npm sub-projects"
 task :build_npm do
   ["share-location", "photo-gallery", "chikorita"].each do |i|
     sh "mkdir -pv ./dist/#{i}"
-    sh "deno task --cwd ./#{i} build"
+    sh "pnpm run -C ./#{i} build"
     sh "cp -rv ./#{i}/dist/* ./dist/#{i}"
   end
 end
