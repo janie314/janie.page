@@ -17,3 +17,11 @@ ip.janie.page {
 	respond "{{.RemoteIP}}"
 	encode zstd gzip
 }
+
+git.janie.page {
+	templates
+	header Content-Type text/plain
+	respond "git"
+	encode zstd gzip
+}
+

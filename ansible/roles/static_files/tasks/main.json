@@ -1,0 +1,48 @@
+[{
+  "tags": "static_Files",
+  "block": [
+    {
+      "name": "Create /var/www/",
+      "ansible.builtin.file": {
+        "path": "/var/www",
+        "mode": "0755",
+        "owner": "root",
+        "group": "root",
+        "seuser": "system_u",
+        "serole": "object_r",
+        "setype": "httpd_sys_content_t",
+        "selevel": "s0"
+      }
+    },
+    {
+      "name": "Create /var/www/html/",
+      "ansible.builtin.file": {
+        "path": "/var/www/html",
+        "mode": "0755",
+        "owner": "root",
+        "group": "root",
+        "seuser": "system_u",
+        "serole": "object_r",
+        "setype": "httpd_sys_content_t",
+        "selevel": "s0"
+      }
+    },
+    {
+      "name": "Deploy static files",
+      "ansible.builtin.copy": {
+        "src": "../../dist/",
+        "dest": "/var/www/html",
+        "mode": "0644",
+        "directory_mode": "0755",
+        "owner": "root",
+        "group": "root",
+        "seuser": "system_u",
+        "serole": "object_r",
+        "setype": "httpd_sys_content_t",
+        "selevel": "s0"
+      },
+      "register": "static_files",
+      "become": "yes"
+    }
+  ]
+}]

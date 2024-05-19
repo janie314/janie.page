@@ -1,0 +1,12 @@
+[
+  {
+    "name": "janie.page deployment",
+    "hosts": "janie.page",
+    "strategy": "free",
+    "roles": [
+      { "name": "dnf" },
+      { "name": "static_files" },
+      { "name": "caddy" }
+    ]
+  }
+]
