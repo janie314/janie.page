@@ -1,24 +1,31 @@
+---
 inherit_mode:
   merge:
     - Exclude
 
-require: 
-- standard
-- standard-custom
-- standard-performance
-- rubocop-performance
-- rubocop-rake
-- rubocop-rspec
+require:
+  - standard
+  - standard-rails
+  - standard-custom
+  - standard-performance
+  - rubocop-performance
+  - rubocop-rake
+  - rubocop-rspec
+  - rubocop-rails
+  - rubocop-rspec_rails
+  - rubocop-capybara
 
 inherit_gem:
   standard: config/base.yml
+  standard-rails: config/base.yml
   standard-performance: config/base.yml
   standard-custom: config/base.yml
 
 # custom enables/disables
 Layout/LineLength:
-  Enabled: true
-  Max: 100
+  Enabled: false
+Layout/EmptyLineBetweenDefs:
+  AllowAdjacentOneLineDefs: true
 Style/DisableCopsWithinSourceCodeDirective:
   Enabled: true
 Rake/Desc:
@@ -27,6 +34,29 @@ RSpec/MultipleExpectations:
   Enabled: false
 RSpec/ExampleLength:
   Enabled: false
+
+#
+# Ignore differences from Rails autogeneration
+#
+Layout/SpaceInsideHashLiteralBraces:
+  Exclude:
+    - 'config/environments/*'
+Layout/ExtraSpacing:
+  Exclude:
+    - 'config/environments/*'
+Style/GlobalStdStream:
+  Exclude:
+    - 'config/environments/*'
+Layout/SpaceInsideArrayLiteralBrackets:
+  Exclude:
+    - 'config/environments/*'
+
+#
+# Ignore differences from RSpec autogeneration
+#
+Style/StringLiterals:
+  Exclude:
+    - 'spec/rails_helper.rb'
 
 AllCops:
   NewCops: enable
@@ -91,4 +121,4 @@ AllCops:
     - 'tmp/**/*'
     - 'vendor/**/*'
     - '.git/**/*'
-
+    - 'db/migrate/*.active_storage.rb'
