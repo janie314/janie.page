@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <title>Living Your Best Life With SystemD Timers</title>
+  <title>Git</title>
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
@@ -107,78 +107,23 @@
 </body>
 </html>
 <header id="title-block-header">
-<h1 class="title">Living Your Best Life With SystemD Timers</h1>
+<h1 class="title">Git</h1>
 </header>
-<nav id="TOC" role="doc-toc">
-<h2 id="toc-title">Table of Contents</h2>
+<p>Conventions:</p>
 <ul>
-<li><a href="#setup" id="toc-setup">Setup</a></li>
-<li><a href="#end-result" id="toc-end-result">End result</a></li>
-<li><a href="#selinux-considerations"
-id="toc-selinux-considerations">SELinux considerations</a></li>
+<li><code>working</code> is the name of your working branch.</li>
+<li><code>other-branch</code> is the name of another branch.</li>
 </ul>
-</nav>
-<h1 id="setup">Setup</h1>
-<p>Here is a simple SystemD timer which implements a backup for your
-trusty Fedora laptop.</p>
-<p>There are two files involved as shown below. It’s necessary that
-<code>fedorabackup.service</code> and <code>fedorabackup.timer</code>
-have the same name before their <code>.{service,timer}</code>
-suffixes.</p>
-<p>File #1: <code>/etc/systemd/system/fedorabackup.timer</code>.</p>
-<pre><code>[Unit]
-Description=fedora backup job
-
-[Timer]
-OnCalendar=*-*-* *:00:00
-
-[Install]
-WantedBy=timers.target</code></pre>
-<p>File #2: <code>/etc/systemd/system/fedorabackup.service</code>.</p>
-<pre><code>[Unit]
-Description=fedora backup service
-
-[Service]
-Type=oneshot
-ExecStart=/usr/bin/bash /home/janie/.local/bin/backup
-User=janie
-Group=systemd-journal</code></pre>
-<p>The contents of <code>/home/janie/.local/bin/backup</code> are as
-follows- notice the <code>-e</code> argument I had to pass to
-<code>rsync</code> to get it to work.</p>
-<div class="sourceCode" id="cb3"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/usr/bin/bash</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">/usr/bin/rsync</span> <span class="at">-av</span> <span class="at">-e</span> <span class="st">&#39;/usr/bin/ssh -i /home/janie/.ssh/id_ed25519&#39;</span> <span class="dt">\</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">--exclude</span> Downloads <span class="dt">\</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>        /home/janie/ janie@0.0.0.0:/mnt/externalssd/fedora-laptop/</span></code></pre></div>
-<p>Finally, enable the service with
-<code>sudo systemctl enable fedorabackup.timer</code> and
-<code>sudo systemctl start fedorabackup.timer</code>.</p>
-<h1 id="end-result">End result</h1>
-<p>We end up with a job which executes our <code>fedorabackup.sh</code>
-script every hour on the hour.</p>
-<p>This is quicker to do with cron, but our friend SystemD timers give
-us the following improvements over cron:</p>
-<ul>
-<li>For free- your jobs will never stack on top of another! If our
-<code>fedorabackup.sh</code> script is triggered at 10:00am and ends up
-taking more than an hour to execute, upon the 11:00am timer trigger,
-SystemD will not execute <code>fedorabackup.sh</code> again on top of
-the 10:00am execution. This happens all the time with cron jobs, and can
-make life difficult!</li>
-<li>Nice logging via the command
-<code>journalctl -u fedorabackup.service</code>.</li>
-<li>Lots of SystemD fanciness- see <code>RandomizedDelaySec</code> here:
-https://www.freedesktop.org/software/systemd/man/systemd.timer.html.</li>
-<li>A friendly summary of your upcoming jobs via
-<code>systemctl list-timers</code>.</li>
-</ul>
-<h1 id="selinux-considerations">SELinux considerations</h1>
-<p>Compare the labels of your files
-<code>/etc/systemd/system/fedorabackup.{service,timer}</code> to other
-files in their directory per usual.</p>
-<p>I had to use <code>setsebool</code> to enable the SELinux booleans
-<code>rsync_client</code> and <code>rsync_export_all_ro</code> to get
-rsync to work in this setup.</p>
+<p>Scenario: you want <code>working</code> to be identical to
+`other-branch.</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> fetch <span class="at">--all</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> checkout working</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> reset <span class="at">--hard</span> origin/other-branch</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push <span class="at">-f</span></span></code></pre></div>
+<p>Scenario: your current working branch looks like you want, but needs
+a clean history branching off of main.</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> rebase <span class="at">--strategy</span> recursive <span class="at">-X</span> theirs</span></code></pre></div>
 </body>
 </html>
