@@ -5,10 +5,6 @@
 janie.page {
 	file_server
 	root * /var/www/html
-	reverse_proxy /api/* localhost:50001
-	basicauth /api/* {
-		janie JDJhJDE0JEhDaXJwUkVWT1ZoOGpiVUEwZzBxLmVvVXpTZXkvTXVPZ0tYd1l3dk5Xb3RYRVJpR2JIYmJt
-	}
 }
 
 ip.janie.page {
@@ -18,10 +14,9 @@ ip.janie.page {
 	encode zstd gzip
 }
 
-git.janie.page {
-	templates
-	header Content-Type text/plain
-	respond "git"
-	encode zstd gzip
+gnuplex.janie.page {
+  file_server
+  root * /var/www/html/gnuplex
+  redir / /home
+  redir /install.sh https://raw.githubusercontent.com/janie314/gnuplex/refs/heads/main/install_files/install.sh
 }
-
