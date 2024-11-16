@@ -15,8 +15,6 @@ ip.janie.page {
 }
 
 gnuplex.janie.page {
-  file_server
-  root * /var/www/html/gnuplex
-  redir / /home
+  redir / https://github.com/janie314/gnuplex
   redir /install.sh https://raw.githubusercontent.com/janie314/gnuplex/refs/heads/main/install_files/install.sh
 }
