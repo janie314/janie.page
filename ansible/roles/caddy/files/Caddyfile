@@ -1,17 +1,17 @@
 {
-	admin off
+  admin off
 }
 
 janie.page {
-	file_server
-	root * /var/www/html
+  file_server
+  root * /var/www/html
 }
 
 ip.janie.page {
-	templates
-	header Content-Type text/plain
-	respond "{{.RemoteIP}}"
-	encode zstd gzip
+  templates
+  header Content-Type text/plain
+  respond "{{.RemoteIP}}"
+  encode zstd gzip
 }
 
 gnuplex.janie.page {
