@@ -4,12 +4,13 @@ task default: :fmt
 
 desc "build npm sub-projects"
 task :build_npm do
-  %w[share-location photo-gallery chikorita].each do |i|
+  %w[share-location photo-gallery chikorita freebee].each do |i|
     sh "mkdir", "-pv", File.join("dist", i)
     sh "bun", "i", "--cwd", File.join(__dir__, i)
     sh "bun", "run", "--cwd", File.join(__dir__, i), "build"
-    sh "rsync", "-rv", File.join(__dir__, i, "dist") + "/", File.join(__dir__, "dist", i) + "/"
+    sh "rsync", "-rv", "--delete", File.join(__dir__, i, "dist") + "/", File.join(__dir__, "dist", i) + "/"
   end
+  sh "rsync", "-rv", "--delete", File.join(__dir__, "freebee", "api") + "/", File.join(__dir__, "dist", "freebee", "api") + "/"
 end
 
 desc "build markdown writeups"
