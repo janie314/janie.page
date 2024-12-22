@@ -1,30 +1,32 @@
-[{
-  "tags": "caddy",
-  "block": [
-    {
-      "name": "Copy caddy.service into place",
-      "ansible.builtin.copy": {
-        "src": "Caddyfile",
-        "dest": "/etc/caddy/Caddyfile",
-        "owner": "root",
-        "group": "root",
-        "seuser": "system_u",
-        "serole": "object_r",
-        "setype": "httpd_config_t",
-        "selevel": "s0"
+[
+  {
+    "tags": "caddy",
+    "block": [
+      {
+        "name": "Copy caddy.service into place",
+        "ansible.builtin.copy": {
+          "src": "Caddyfile",
+          "dest": "/etc/caddy/Caddyfile",
+          "owner": "root",
+          "group": "root",
+          "seuser": "system_u",
+          "serole": "object_r",
+          "setype": "httpd_config_t",
+          "selevel": "s0"
+        },
+        "register": "caddyfile",
+        "become": "yes"
       },
-      "register": "caddyfile",
-      "become": "yes"
-    },
-    {
-      "name": "Enable caddy.service",
-      "ansible.builtin.systemd_service": {
-        "name": "caddy",
-        "state": "restarted",
-        "enabled": true
-      },
-      "when": "caddyfile.changed or static_files.changed",
-      "become": "yes"
-    }
-  ]
-}]
+      {
+        "name": "Enable caddy.service",
+        "ansible.builtin.systemd_service": {
+          "name": "caddy",
+          "state": "restarted",
+          "enabled": true
+        },
+        "when": "caddyfile.changed or static_files.changed",
+        "become": "yes"
+      }
+    ]
+  }
+]

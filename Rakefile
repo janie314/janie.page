@@ -8,14 +8,28 @@ task :build_npm do
     sh "mkdir", "-pv", File.join("dist", i)
     sh "bun", "i", "--cwd", File.join(__dir__, i)
     sh "bun", "run", "--cwd", File.join(__dir__, i), "build"
-    sh "rsync", "-rv", "--delete", File.join(__dir__, i, "dist") + "/", File.join(__dir__, "dist", i) + "/"
   end
   sh "rsync", "-rv", "--delete", File.join(__dir__, "freebee", "api") + "/", File.join(__dir__, "dist", "freebee", "api") + "/"
 end
 
+task :compress do
+  Dir.glob(File.join(__dir__, "dist") + "**/*") do |path|
+    next if File.directory?(path)
+    next if /.*\.(gz|zst)$/.match?(path)
+    sh "gzip", "-fk", path
+    sh "zstd", "-fk", path
+    if File.size(path) <= File.size(path + ".gz")
+      File.delete(path + ".gz")
+    end
+    if File.size(path) <= File.size(path + ".zst")
+      File.delete(path + ".zst")
+    end
+  end
+end
+
 desc "build markdown writeups"
 task :build_md do
-  sh File.join(__dir__, "writeups", "compile")
+  sh "bash", File.join(__dir__, "writeups", "compile")
 end
 
 desc "copy static files to dist"
@@ -24,7 +38,7 @@ task :cp_static do
 end
 
 desc "build project to ./dist"
-task build: %i[build_npm build_md cp_static]
+task build: %i[build_npm build_md cp_static compress]
 
 desc "deploy the static web server (dry run)"
 task :deploy_test do

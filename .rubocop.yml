@@ -1,3 +1,11 @@
+<%
+require "open3"
+def gem_exists(gem)
+  res = Open3.popen3("bundle", "info", "^#{gem}$") do |i, o, e, t|
+    t.value.success?
+  end
+end
+%>
 ---
 inherit_mode:
   merge:
@@ -5,19 +13,20 @@ inherit_mode:
 
 require:
   - standard
-  - standard-rails
+  <%= "- standard-rails" if gem_exists "rails" %>
   - standard-custom
   - standard-performance
   - rubocop-performance
   - rubocop-rake
-  - rubocop-rspec
-  - rubocop-rails
-  - rubocop-rspec_rails
-  - rubocop-capybara
+  <%= "- rubocop-factory_bot" if gem_exists "factory_bot" %>
+  <%= "- rubocop-rspec" if gem_exists "rspec-core" %>
+  <%= "- rubocop-rails" if gem_exists "rails" %>
+  <%= "- rubocop-rspec_rails" if gem_exists "rails" %>
+  <%= "- rubocop-capybara" if gem_exists "capybara" %>
 
 inherit_gem:
   standard: config/base.yml
-  standard-rails: config/base.yml
+  <%= "standard-rails: config/base.yml" if gem_exists "rails" %>
   standard-performance: config/base.yml
   standard-custom: config/base.yml
 
@@ -26,24 +35,30 @@ Layout/LineLength:
   Enabled: false
 Layout/EmptyLineBetweenDefs:
   AllowAdjacentOneLineDefs: true
+Layout/ExtraSpacing:
+  Enabled: false
+Layout/SpaceBeforeComma:
+  Enabled: false
+Layout/SpaceInsideHashLiteralBraces:
+  Enabled: false
 Style/DisableCopsWithinSourceCodeDirective:
   Enabled: true
 Rake/Desc:
   Enabled: false
+<% if gem_exists "rails" %>
+Rails/ThreeStateBooleanColumn:
+  Enabled: false
+<% end %>
+<% if gem_exists "rspec-core" %>
 RSpec/MultipleExpectations:
   Enabled: false
 RSpec/ExampleLength:
   Enabled: false
+<% end %>
 
 #
 # Ignore differences from Rails autogeneration
 #
-Layout/SpaceInsideHashLiteralBraces:
-  Exclude:
-    - 'config/environments/*'
-Layout/ExtraSpacing:
-  Exclude:
-    - 'config/environments/*'
 Style/GlobalStdStream:
   Exclude:
     - 'config/environments/*'
@@ -122,3 +137,4 @@ AllCops:
     - 'vendor/**/*'
     - '.git/**/*'
     - 'db/migrate/*.active_storage.rb'
+    - 'db/migrate/*.acts_as_taggable_on_engine.rb'

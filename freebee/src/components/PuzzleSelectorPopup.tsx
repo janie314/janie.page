@@ -11,26 +11,28 @@ function PuzzleSelectorPopup(props: {
       <div className="modal-box bg-stone-800">
         <h3 className="font-bold text-lg text-stone-200 my-2">More Puzzles</h3>
         <ul className="list-disc list-inside">
-          {props.puzzles === null ? null : Object.keys(props.puzzles)
-            .sort()
-            .reverse()
-            .map((id) => (
-              <li key={`puzzle-${id}`}>
-                <a
-                  className="text-blue-300"
-                  href={`#${id}`}
-                  onClick={() => {
-                    props.setPuzzleID(id);
-                    if (props.ref.current !== null) {
-                      //@ts-ignore
-                      props.ref.current.close();
-                    }
-                  }}
-                >
-                  {id}
-                </a>
-              </li>
-            ))}
+          {props.puzzles === null
+            ? null
+            : Object.keys(props.puzzles)
+                .sort()
+                .reverse()
+                .map((id) => (
+                  <li key={`puzzle-${id}`}>
+                    <a
+                      className="text-blue-300"
+                      href={`#${id}`}
+                      onClick={() => {
+                        props.setPuzzleID(id);
+                        if (props.ref.current !== null) {
+                          //@ts-ignore
+                          props.ref.current.close();
+                        }
+                      }}
+                    >
+                      {id}
+                    </a>
+                  </li>
+                ))}
         </ul>
         <div className="modal-action">
           <form method="dialog">

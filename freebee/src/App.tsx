@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from "react";
+import { getURLHash, loadState, saveState, setURLHash } from "./Helpers";
+import { GameBoard } from "./components/GameBoard";
 import "./App.css";
 import {
   type Answer,
@@ -8,11 +10,9 @@ import {
   sort_answers,
   total_score,
 } from "./Game";
-import { GameBoard } from "./components/GameBoard";
-import { getURLHash, loadState, saveState, setURLHash } from "./Helpers";
-import { ScoreBoard } from "./components/ScoreBoard";
-import { PuzzleSelectorPopup } from "./components/PuzzleSelectorPopup";
 import { HowToPlayPopup } from "./components/HowToPlayPopup";
+import { PuzzleSelectorPopup } from "./components/PuzzleSelectorPopup";
+import { ScoreBoard } from "./components/ScoreBoard";
 
 function App() {
   // Application state

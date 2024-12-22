@@ -16,7 +16,8 @@
   align-items: stretch;
 }
 
-.panel-input-htmlinput, .panel-input-cssinput {
+.panel-input-htmlinput,
+.panel-input-cssinput {
   flex: 1;
 }
 
@@ -35,3 +36,6 @@ textarea {
   padding: 0;
 }
 
+textarea {
+  border: 1px solid black;
+}

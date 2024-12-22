@@ -1,17 +1,18 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import logo from "./logo.svg";
 import "./App.css";
-import { Map, View } from "ol";
+import { Map as OpenMap, View } from "ol";
 import { Tile } from "ol/layer";
 import { fromLonLat } from "ol/proj";
 import { OSM } from "ol/source";
 
 function App() {
-  const [pos, setPos] = useState<
-    { latitude: null | number; longitude: null | number }
-  >({ latitude: null, longitude: null });
+  const [pos, setPos] = useState<{
+    latitude: null | number;
+    longitude: null | number;
+  }>({ latitude: null, longitude: null });
   const [shareData, setShareData] = useState("");
-  const [map, setMap] = useState<Map | null>(null);
+  const [map, setMap] = useState<OpenMap | null>(null);
 
   useEffect(() => {
     // get location and generate share links
@@ -38,18 +39,18 @@ function App() {
     );
   }, [pos]);
 
-  const createMap = useCallback((elt: HTMLElement) => {
-    if (map === null && pos.latitude !== null && pos.longitude !== null) {
-      console.log(map);
-      console.log(pos);
-      // generate map
-      const view = new View({
-        center: fromLonLat([pos.longitude, pos.latitude]), //pos.latitude, pos.longitude]),
-        zoom: 18,
-      });
-      setMap(
-        new Map(
-          {
+  const createMap = useCallback(
+    (elt: HTMLElement) => {
+      if (map === null && pos.latitude !== null && pos.longitude !== null) {
+        console.log(map);
+        console.log(pos);
+        // generate map
+        const view = new View({
+          center: fromLonLat([pos.longitude, pos.latitude]), //pos.latitude, pos.longitude]),
+          zoom: 18,
+        });
+        setMap(
+          new OpenMap({
             target: elt,
             layers: [
               new Tile({
@@ -57,11 +58,12 @@ function App() {
               }),
             ],
             view,
-          },
-        ),
-      );
-    }
-  }, [pos]);
+          }),
+        );
+      }
+    },
+    [pos],
+  );
 
   return (
     <div className="App">
@@ -79,7 +81,8 @@ function App() {
           type="button"
           value="Share"
           onClick={(e) =>
-            navigator.share({ text: shareData, title: "My location" })}
+            navigator.share({ text: shareData, title: "My location" })
+          }
         />
       </div>
 
@@ -87,8 +90,7 @@ function App() {
         id="demo-map"
         // @ts-ignore
         ref={createMap}
-      >
-      </div>
+      />
     </div>
   );
 }

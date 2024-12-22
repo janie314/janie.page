@@ -1,5 +1,5 @@
 .App {
-  display: flex;	
+  display: flex;
   flex-direction: column;
   font: 1em sans-serif;
   padding: 1%;
@@ -13,7 +13,7 @@
   font-weight: bold;
 }
 
-input[type=button] {
+input[type="button"] {
   border: 1px solid black;
   background-color: white;
 }

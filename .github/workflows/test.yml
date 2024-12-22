@@ -1,0 +1,36 @@
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - release
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    name: testing and linting this branch
+    steps:
+    - name: check out this repo
+      uses: actions/checkout@v4
+      with:
+        lfs: true
+    - name: setup ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        bundler-cache: true
+    - name: setup bun
+      uses: oven-sh/setup-bun@v2
+      with:
+        bun-version: latest
+    - name: lint frontend code
+      run: |
+        bun i
+        bun run biome ci --verbose
+    - name: lint ruby code
+      run: |
+        bundle exec rubocop
+    - name: run frontend build was run
+      run: |
+        bundle exec rake build
+    - name: check for TODOs
+      run: |
+        git ls-files frontend backend | xargs grep -Ii todo | wc -l | xargs ruby -e 'exit ARGV[0].to_i == 0'

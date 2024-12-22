@@ -20,6 +20,6 @@ pre {
   background-color: #f5f5f5;
   padding: 1%;
 }
-li:nth-child(n+1) {
+li:nth-child(n + 1) {
   margin-top: 1%;
 }

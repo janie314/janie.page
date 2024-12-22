@@ -1,3 +1,3 @@
 source "https://rubygems.org"
 
-gem "peppermint", "~> 0.1.13", group: :development
+gem "peppermint", "~> 0.1.17", group: :development

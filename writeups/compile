@@ -1,10 +1,10 @@
-#!/usr/bin/sh
-basedir=$(realpath $(dirname "$0"))
-mkdir "$basedir"/output
+#!/bin/bash
+basedir=$(realpath "$(dirname "$0")")
+mkdir -pv "$basedir"/output
 find "$basedir"/output -mindepth 1 -type f -delete
 cp -v "$basedir"/../static/index.css "$basedir"/output/
 cp -v "$basedir"/../static/extrastyle.css "$basedir"/output/
-find "$basedir" -name '*.md' | while read line
+find "$basedir" -name '*.md' | while read -r line
 do
 	shortname=$(basename "$line")
 	pandoc -f markdown+rebase_relative_paths -t html \
@@ -15,5 +15,7 @@ do
 		"$line" \
 		-o "$basedir"/output/$(echo "$shortname" | sed -e "s/md\$/html/")
 done
+mkdir -pv "$basedir"/../dist/writeups
 mv -v "$basedir"/output/* "$basedir"/../dist/writeups
+rsync -av "$basedir"/pics/ "$basedir"/../dist/writeups/pics/
 find "$basedir"/../dist/writeups -name '*.html' -exec sed -e 's/href=".*output\//href="/' -i {} \;

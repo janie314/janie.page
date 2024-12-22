@@ -1,16 +1,16 @@
-[{
-  "tags": "dnf",
-  "block": [
-    {
-      "name": "Install DNF packages",
-      "ansible.builtin.package": {
-        "name": [
-          "caddy"
-        ],
-        "state": "present"
-      },
-      "become": "yes",
-      "when": "ansible_facts['os_family']|lower == 'redhat'"
-    }
-  ]
-}]
+[
+  {
+    "tags": "dnf",
+    "block": [
+      {
+        "name": "Install DNF packages",
+        "ansible.builtin.package": {
+          "name": ["caddy"],
+          "state": "present"
+        },
+        "become": "yes",
+        "when": "ansible_facts['os_family']|lower == 'redhat'"
+      }
+    ]
+  }
+]

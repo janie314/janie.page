@@ -1,5 +1,5 @@
 .colflex {
-  display: flex; 
+  display: flex;
   flex-direction: column;
 }
 .colflex:nth-child(2) {
@@ -21,7 +21,7 @@
 }
 /* 
  * layout adjustments
- */ 
+ */
 #root {
   margin: 3%;
 }
@@ -56,8 +56,8 @@
 /* 
  * style
  */
- * { 
-  color: black; 
+* {
+  color: black;
   font: 1em sans-serif;
 }
 h1 {
@@ -75,6 +75,9 @@ h1 {
   font-weight: bold;
   margin-bottom: 1%;
 }
-code, .sourceCode, .sourceCode > *, .sourceCode > * > * {
+code,
+.sourceCode,
+.sourceCode > *,
+.sourceCode > * > * {
   font: 1em monospace;
 }
