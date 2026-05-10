@@ -15,7 +15,7 @@ import subprocess
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parent
-NPM_APPS = ["share-location", "photo-gallery", "chikorita", "freebee"]
+NPM_APPS = ["share-location", "chikorita", "freebee"]
 
 
 def sh(*args, env=None, check=True):
