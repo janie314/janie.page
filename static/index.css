@@ -1,3 +1,8 @@
+* {
+  color: black;
+  font: 1em sans-serif;
+}
+
 .colflex {
   display: flex;
   flex-direction: column;
@@ -7,9 +12,6 @@
 }
 .colflex:nth-child(2) {
   flex: 3;
-}
-#picdiv > * {
-  margin-bottom: 4%;
 }
 .rowflex {
   display: flex;
@@ -56,10 +58,6 @@
 /* 
  * style
  */
-* {
-  color: black;
-  font: 1em sans-serif;
-}
 h1 {
   font: 1.5em sans-serif;
   font-weight: bold;
@@ -80,4 +78,8 @@ code,
 .sourceCode > *,
 .sourceCode > * > * {
   font: 1em monospace;
+}
+
+#picdiv > * {
+  margin-bottom: 4%;
 }

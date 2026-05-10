@@ -119,6 +119,7 @@ function App() {
   }, [pos]);
 
   return (
+    // biome-ignore lint/a11y/noStaticElementInteractions: idc
     <div className="app" onKeyDown={handleKeyDown}>
       <div className="panel-webview">
         <iframe
