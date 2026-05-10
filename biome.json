@@ -37,7 +37,7 @@
     "useIgnoreFile": true
   },
   "files": {
+    "includes": ["**", "!**/package.json", "!freebee/api/words.json"],
     "ignoreUnknown": true
-  },
-  "overrides": [{}]
+  }
 }
