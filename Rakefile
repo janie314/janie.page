@@ -43,14 +43,14 @@ task build: %i[build_npm build_md cp_static compress]
 desc "deploy the static web server (dry run)"
 task :deploy_test do
   ENV["ANSIBLE_CONFIG"] = File.join(__dir__, "ansible", "ansible.cfg")
-  sh "ansible-playbook", "--ask-vault-pass", "--diff", "--check", "-v",
+  sh "ansible-playbook", "-K", "--diff", "--check", "-vv",
     File.join(__dir__, "ansible", "playbooks", "deploy.json")
 end
 
 desc "deploy the static web server"
 task deploy: :build do
   ENV["ANSIBLE_CONFIG"] = File.join(__dir__, "ansible", "ansible.cfg")
-  sh "ansible-playbook", "--ask-vault-pass",
+  sh "ansible-playbook", "-K",
     File.join(__dir__, "ansible", "playbooks", "deploy.json")
 end
 
