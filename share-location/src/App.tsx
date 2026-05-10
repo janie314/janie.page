@@ -88,7 +88,7 @@ function App() {
 
       <div
         id="demo-map"
-        // @ts-ignore
+        // @ts-expect-error
         ref={createMap}
       />
     </div>

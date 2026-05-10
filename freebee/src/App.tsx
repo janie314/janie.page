@@ -88,7 +88,7 @@ function App() {
               className="button bg-yellow-200 text-stone-800 ml-2 py-1 px-2"
               onClick={() => {
                 if (choosePuzzleDialog.current !== null) {
-                  //@ts-ignore
+                  //@ts-expect-error
                   choosePuzzleDialog.current.showModal();
                 }
               }}
@@ -100,7 +100,7 @@ function App() {
               className="button bg-yellow-200 text-stone-800 ml-1 py-1 px-2"
               onClick={() => {
                 if (howToPlayDialog.current !== null) {
-                  //@ts-ignore
+                  //@ts-expect-error
                   howToPlayDialog.current.showModal();
                 }
               }}
