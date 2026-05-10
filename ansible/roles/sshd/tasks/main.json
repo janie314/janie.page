@@ -1,0 +1,33 @@
+[
+  {
+    "tags": "sshd",
+    "block": [
+      {
+        "name": "Copy sshd_config into place",
+        "ansible.builtin.copy": {
+          "src": "sshd_config",
+          "dest": "/etc/ssh/sshd_config",
+          "owner": "root",
+          "group": "root",
+          "mode": "0600",
+          "seuser": "system_u",
+          "serole": "object_r",
+          "setype": "etc_t",
+          "selevel": "s0"
+        },
+        "register": "sshdconf",
+        "become": "yes"
+      },
+      {
+        "name": "Enable sshd.service",
+        "ansible.builtin.systemd_service": {
+          "name": "sshd",
+          "state": "restarted",
+          "enabled": true
+        },
+        "when": "sshdconf.changed",
+        "become": "yes"
+      }
+    ]
+  }
+]
