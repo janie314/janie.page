@@ -4,6 +4,7 @@
     "hosts": "targets",
     "strategy": "free",
     "roles": [
+      { "name": "users" },
       { "name": "sshd" },
       { "name": "chrony" },
       { "name": "dnf" },
