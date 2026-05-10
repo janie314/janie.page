@@ -1,2 +1,5 @@
 dist
 node_modules
+.ruby-lsp
+.venv
+__pycache__
