@@ -4,7 +4,11 @@
     "hosts": "targets",
     "strategy": "free",
     "roles": [
+      { "name": "users" },
+      { "name": "sshd" },
+      { "name": "chrony" },
       { "name": "dnf" },
+      { "name": "andromeda" },
       { "name": "static_files" },
       { "name": "caddy" }
     ]

@@ -1,0 +1,94 @@
+[
+  {
+    "tags": "andromeda",
+    "block": [
+      {
+        "name": "Create /etc/wireguard directory",
+        "ansible.builtin.file": {
+          "path": "/etc/wireguard",
+          "state": "directory",
+          "mode": "0700",
+          "owner": "root",
+          "group": "root",
+          "seuser": "system_u",
+          "serole": "object_r",
+          "setype": "etc_t",
+          "selevel": "s0"
+        },
+        "become": "yes"
+      },
+      {
+        "name": "Install WireGuard interface configuration",
+        "ansible.builtin.copy": {
+          "src": "andromeda.conf",
+          "dest": "/etc/wireguard/andromeda.conf",
+          "owner": "root",
+          "group": "root",
+          "mode": "0600",
+          "seuser": "system_u",
+          "serole": "object_r",
+          "setype": "etc_t",
+          "selevel": "s0"
+        },
+        "become": "yes"
+      },
+      {
+        "name": "Install Andromeda private key",
+        "ansible.builtin.copy": {
+          "src": "janie.page.priv",
+          "dest": "/etc/wireguard/janie.page.priv",
+          "owner": "root",
+          "group": "root",
+          "mode": "0600",
+          "seuser": "system_u",
+          "serole": "object_r",
+          "setype": "etc_t",
+          "selevel": "s0"
+        },
+        "become": "yes"
+      },
+      {
+        "name": "Install Andromeda public key",
+        "ansible.builtin.copy": {
+          "src": "janie.page.pub",
+          "dest": "/etc/wireguard/janie.page.pub",
+          "owner": "root",
+          "group": "root",
+          "mode": "0600",
+          "seuser": "system_u",
+          "serole": "object_r",
+          "setype": "etc_t",
+          "selevel": "s0"
+        },
+        "become": "yes"
+      },
+      {
+        "name": "Create andromeda systemd service",
+        "ansible.builtin.copy": {
+          "dest": "/etc/systemd/system/andromeda.service",
+          "content": "[Unit]\nDescription=Andromeda WireGuard VPN\nAfter=network.target\n\n[Service]\nType=oneshot\nRemainAfterExit=yes\nExecStart=/usr/bin/wg-quick up /etc/wireguard/andromeda.conf\nExecStop=/usr/bin/wg-quick down /etc/wireguard/andromeda.conf\n\n[Install]\nWantedBy=multi-user.target\n",
+          "mode": "0600",
+          "owner": "root",
+          "group": "root",
+          "seuser": "unconfined_u",
+          "serole": "object_r",
+          "setype": "systemd_unit_file_t",
+          "selevel": "s0"
+        },
+        "register": "andromeda_service",
+        "become": "yes"
+      },
+      {
+        "name": "Enable and start andromeda.service",
+        "ansible.builtin.systemd": {
+          "name": "andromeda.service",
+          "enabled": true,
+          "state": "started",
+          "daemon_reload": true
+        },
+        "when": "andromeda_service.changed",
+        "become": "yes"
+      }
+    ]
+  }
+]

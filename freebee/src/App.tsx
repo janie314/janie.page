@@ -1,7 +1,10 @@
 import { useEffect, useRef, useState } from "react";
-import { getURLHash, loadState, saveState, setURLHash } from "./Helpers";
 import { GameBoard } from "./components/GameBoard";
+import { getURLHash, loadState, saveState, setURLHash } from "./Helpers";
 import "./App.css";
+import { HowToPlayPopup } from "./components/HowToPlayPopup";
+import { PuzzleSelectorPopup } from "./components/PuzzleSelectorPopup";
+import { ScoreBoard } from "./components/ScoreBoard";
 import {
   type Answer,
   type Dictionary,
@@ -10,9 +13,6 @@ import {
   sort_answers,
   total_score,
 } from "./Game";
-import { HowToPlayPopup } from "./components/HowToPlayPopup";
-import { PuzzleSelectorPopup } from "./components/PuzzleSelectorPopup";
-import { ScoreBoard } from "./components/ScoreBoard";
 
 function App() {
   // Application state
@@ -88,7 +88,7 @@ function App() {
               className="button bg-yellow-200 text-stone-800 ml-2 py-1 px-2"
               onClick={() => {
                 if (choosePuzzleDialog.current !== null) {
-                  //@ts-ignore
+                  //@ts-expect-error
                   choosePuzzleDialog.current.showModal();
                 }
               }}
@@ -100,7 +100,7 @@ function App() {
               className="button bg-yellow-200 text-stone-800 ml-1 py-1 px-2"
               onClick={() => {
                 if (howToPlayDialog.current !== null) {
-                  //@ts-ignore
+                  //@ts-expect-error
                   howToPlayDialog.current.showModal();
                 }
               }}

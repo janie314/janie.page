@@ -1,2 +1,7 @@
 dist
 node_modules
+.ruby-lsp
+.venv
+__pycache__
+**/.vite
+ansible/roles/andromeda/files/*

@@ -1,30 +1,31 @@
 [
   {
-    "tags": "caddy",
+    "tags": "chrony",
     "block": [
       {
-        "name": "Copy caddy.service into place",
+        "name": "Copy chrony.conf into place",
         "ansible.builtin.copy": {
-          "src": "Caddyfile",
-          "dest": "/etc/caddy/Caddyfile",
+          "src": "chrony.conf",
+          "dest": "/etc/chrony.conf",
           "owner": "root",
           "group": "root",
+          "mode": "0644",
           "seuser": "system_u",
           "serole": "object_r",
           "setype": "etc_t",
           "selevel": "s0"
         },
-        "register": "caddyfile",
+        "register": "chronyconf",
         "become": "yes"
       },
       {
-        "name": "Enable caddy.service",
+        "name": "Enable chronyd.service",
         "ansible.builtin.systemd_service": {
-          "name": "caddy",
+          "name": "chronyd",
           "state": "restarted",
           "enabled": true
         },
-        "when": "caddyfile.changed",
+        "when": "chronyconf.changed",
         "become": "yes"
       }
     ]

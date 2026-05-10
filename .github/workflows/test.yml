@@ -11,10 +11,8 @@ jobs:
     steps:
     - name: check out this repo
       uses: actions/checkout@v6
-    - name: setup ruby
-      uses: ruby/setup-ruby@v1
-      with:
-        bundler-cache: true
+    - name: Install the latest version of uv
+      uses: astral-sh/setup-uv@08807647e7069bb48b6ef5acd8ec9567f424441b
     - name: setup bun
       uses: oven-sh/setup-bun@v2
       with:
@@ -25,11 +23,10 @@ jobs:
         bun run biome ci
     - name: lint ruby code
       run: |
-        bundle
-        bundle exec rubocop
+        uv run black --check .
     - name: run frontend build
       run: |
-        bundle exec rake build
+        uv run make.py build
     - name: check for TODOs
       run: |
         git ls-files frontend backend | xargs grep -Ii todo | wc -l | xargs ruby -e 'exit ARGV[0].to_i == 0'

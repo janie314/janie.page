@@ -1,5 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
-import logo from "./logo.svg";
+import { useCallback, useEffect, useState } from "react";
 import "./App.css";
 import { Map as OpenMap, View } from "ol";
 import { Tile } from "ol/layer";
@@ -80,7 +79,7 @@ function App() {
         <input
           type="button"
           value="Share"
-          onClick={(e) =>
+          onClick={(_e) =>
             navigator.share({ text: shareData, title: "My location" })
           }
         />
@@ -88,7 +87,7 @@ function App() {
 
       <div
         id="demo-map"
-        // @ts-ignore
+        // @ts-expect-error
         ref={createMap}
       />
     </div>

@@ -1,6 +1,4 @@
-function HowToPlayPopup(props: {
-  ref: React.RefObject<null>;
-}) {
+function HowToPlayPopup(props: { ref: React.RefObject<null> }) {
   return (
     <dialog ref={props.ref} className="modal">
       <div className="modal-box bg-stone-800">
@@ -24,7 +22,7 @@ function HowToPlayPopup(props: {
                 console.log("a");
                 if (props.ref.current !== null) {
                   console.log(props.ref.current);
-                  //@ts-ignore
+                  //@ts-expect-error
                   props.ref.current.close();
                 }
               }}

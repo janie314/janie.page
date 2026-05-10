@@ -24,7 +24,7 @@ function PuzzleSelectorPopup(props: {
                       onClick={() => {
                         props.setPuzzleID(id);
                         if (props.ref.current !== null) {
-                          //@ts-ignore
+                          //@ts-expect-error
                           props.ref.current.close();
                         }
                       }}
@@ -43,7 +43,7 @@ function PuzzleSelectorPopup(props: {
                 console.log("a");
                 if (props.ref.current !== null) {
                   console.log(props.ref.current);
-                  //@ts-ignore
+                  //@ts-expect-error
                   props.ref.current.close();
                 }
               }}
