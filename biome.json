@@ -1,54 +1,24 @@
 {
-  "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
-  "vcs": {
-    "enabled": true,
-    "clientKind": "git",
-    "useIgnoreFile": true
-  },
+  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
   "linter": {
-    "ignore": [
-      "app/assets/builds/**",
-      "backend/public/assets/**",
-      "backend/static/**",
-      "app/assets/stylesheets/application.tailwind.css",
-      "config/provision/production.json",
-      "vendor/**",
-      "doc",
-      ".yardoc",
-      "**/src/main.tsx",
-      "**/tsconfig.app.json",
-      "**/tsconfig.node.json",
-      "freebee/api/words.json"
-    ],
     "rules": {
+      "correctness": {
+        "useExhaustiveDependencies": "off"
+      },
       "complexity": {
         "noStaticOnlyClass": "off"
       },
-      "correctness": {
-        "useExhaustiveDependencies": "off"
+      "suspicious": {
+        "noUnknownAtRules": "off"
       }
     }
-  },
-  "formatter": {
-    "ignore": [
-      "app/assets/builds/**",
-      "app/assets/stylesheets/application.tailwind.css",
-      "backend/public/assets/**",
-      "backend/static/**",
-      "vendor/**",
-      "doc",
-      "package.json",
-      ".yardoc",
-      "**/src/main.tsx",
-      "config/provision/production.json",
-      "**/tsconfig.app.json",
-      "**/tsconfig.node.json",
-      "freebee/api/words.json"
-    ]
   },
   "css": {
     "formatter": {
       "indentStyle": "space"
+    },
+    "parser": {
+      "tailwindDirectives": true
     }
   },
   "json": {
@@ -61,8 +31,13 @@
       "indentStyle": "space"
     }
   },
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true
+  },
   "files": {
-    "ignoreUnknown": true,
-    "maxSize": 8388608
-  }
+    "ignoreUnknown": true
+  },
+  "overrides": [{}]
 }
