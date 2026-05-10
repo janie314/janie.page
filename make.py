@@ -100,6 +100,7 @@ def deploy() -> None:
         str(ROOT / "ansible" / "playbooks" / "deploy.json"),
         env=env,
     )
+    sh("rsync", "-r", "--delete", "./dist/", "janie.page:/var/www/html-predeploy")
 
 
 def dev() -> None:
