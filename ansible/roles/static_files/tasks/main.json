@@ -18,20 +18,18 @@
         "become": "yes"
       },
       {
-        "name": "Deploy static files",
-        "ansible.builtin.copy": {
-          "src": "../../dist/",
-          "dest": "/var/www/html",
-          "mode": "0644",
-          "directory_mode": "0755",
-          "owner": "root",
-          "group": "root",
+        "name": "Create /var/www/html-predeploy/",
+        "ansible.builtin.file": {
+          "path": "/var/www/html-predeploy",
+          "state": "directory",
+          "mode": "0755",
+          "owner": "janie",
+          "group": "janie",
           "seuser": "system_u",
           "serole": "object_r",
           "setype": "httpd_sys_content_t",
           "selevel": "s0"
         },
-        "register": "static_files",
         "become": "yes"
       }
     ]

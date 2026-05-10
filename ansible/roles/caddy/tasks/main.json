@@ -11,7 +11,7 @@
           "group": "root",
           "seuser": "system_u",
           "serole": "object_r",
-          "setype": "httpd_config_t",
+          "setype": "etc_t",
           "selevel": "s0"
         },
         "register": "caddyfile",
@@ -24,7 +24,7 @@
           "state": "restarted",
           "enabled": true
         },
-        "when": "caddyfile.changed or static_files.changed",
+        "when": "caddyfile.changed",
         "become": "yes"
       }
     ]

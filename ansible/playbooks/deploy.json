@@ -4,6 +4,8 @@
     "hosts": "targets",
     "strategy": "free",
     "roles": [
+      { "name": "sshd" },
+      { "name": "chrony" },
       { "name": "dnf" },
       { "name": "static_files" },
       { "name": "caddy" }
