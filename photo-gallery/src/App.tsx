@@ -4,7 +4,7 @@ import "./App.css";
 import "react-image-gallery/styles/css/image-gallery.css";
 
 function App() {
-  const [images, setImages] = useState(
+  const [images, _setImages] = useState(
     [
       "desert_final_compressed.avif",
       "IMG_0812.avif",
